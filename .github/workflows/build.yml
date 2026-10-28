@@ -1,0 +1,32 @@
+name: Compilar APK
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - name: Crear base Android
+        run: flutter create --platforms=android --org com.buseta --project-name buseta_launcher _build
+      - name: Copiar el launcher
+        run: |
+          rm -rf _build/lib _build/test
+          cp -r lib assets pubspec.yaml _build/
+          cp tools/AndroidManifest.xml _build/android/app/src/main/AndroidManifest.xml
+      - name: Compilar
+        working-directory: _build
+        run: |
+          flutter pub get
+          flutter build apk --release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: BusetaLauncher-apk
+          path: _build/build/app/outputs/flutter-apk/app-release.apk
