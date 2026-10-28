@@ -1,0 +1,23 @@
+name: buseta_launcher
+description: Launcher horizontal para radio Android con diseno liquid glass.
+publish_to: none
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  installed_apps: ^1.6.0
+  flutter_tts: ^4.0.2
+  url_launcher: ^6.3.0
+  android_intent_plus: ^5.0.0
+  geolocator: ^13.0.1
+  http: ^1.2.0
+  webview_flutter: ^4.8.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/bus.png
